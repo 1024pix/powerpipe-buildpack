@@ -55,6 +55,11 @@ if ! command -v $bin_dir/powerpipe >/dev/null; then
 	exit 1
 fi
 
+echo "Installing config"
+mkdir -p $BUILD_DIR/.powerpipe/config
+find $BUILD_DIR -name "*.ppc.erb" -exec bash -c "erb {} > $BUILD_DIR/.powerpipe/config/\$(basename {} .erb)" \;
+echo "Successfully configured"
+
 echo "Installing mod dependencies"
 cd $BUILD_DIR && POWERPIPE_INSTALL_DIR=$BUILD_DIR/.powerpipe $bin_dir/powerpipe mod install --install-dir $BUILD_DIR/.powerpipe
 echo "Successfully installed mod dependencies"
